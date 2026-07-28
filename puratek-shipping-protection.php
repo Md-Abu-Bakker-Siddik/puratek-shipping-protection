@@ -24,6 +24,13 @@ define( 'PURATEK_SP_URL', plugin_dir_url( __FILE__ ) );
  */
 define( 'PURATEK_SP_DEFAULT_PERCENT', 3 );
 
+/**
+ * Fee base — THE one-line switch (pending client answer, Q1):
+ *   'subtotal'          => 3% of product subtotal after discounts (shipping excluded)
+ *   'subtotal_shipping' => 3% of (product subtotal after discounts + shipping cost)
+ */
+define( 'PURATEK_SP_FEE_BASE', 'subtotal' );
+
 class Puratek_Shipping_Protection {
 
 	const SESSION_KEY  = 'puratek_shipping_protection';
@@ -162,11 +169,15 @@ class Puratek_Shipping_Protection {
 		}
 
 		/*
-		 * Fee base: cart contents total after discounts, excluding shipping and tax.
-		 * PENDING CLIENT CONFIRMATION (Q1): if the 3% should include shipping, hook
-		 * 'puratek_sp_fee_base' and add $cart->get_shipping_total() to the base.
+		 * Fee base: controlled by the PURATEK_SP_FEE_BASE constant at the top of
+		 * this file (one-line switch, pending client confirmation of Q1).
+		 * The 'puratek_sp_fee_base' filter can still override the final base.
 		 */
-		$base = (float) apply_filters( 'puratek_sp_fee_base', (float) $cart->get_cart_contents_total(), $cart );
+		$base = (float) $cart->get_cart_contents_total();
+		if ( 'subtotal_shipping' === PURATEK_SP_FEE_BASE ) {
+			$base += (float) $cart->get_shipping_total();
+		}
+		$base = (float) apply_filters( 'puratek_sp_fee_base', $base, $cart );
 
 		$fee = round( $base * ( $this->get_percentage() / 100 ), wc_get_price_decimals() );
 		if ( $fee <= 0 ) {

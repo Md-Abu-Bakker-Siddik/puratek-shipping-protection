@@ -82,8 +82,21 @@ choose whether to include it, just like shipping.
 
 ## Configuration
 
-There is intentionally no settings page — fewer things to break. Behaviour is
-adjusted with small code filters (ask the developer):
+There is intentionally no settings page — fewer things to break.
+
+**Fee base (the one-line switch):** at the top of
+`puratek-shipping-protection.php`:
+
+```php
+define( 'PURATEK_SP_FEE_BASE', 'subtotal' );
+```
+
+- `'subtotal'` — 3% of product subtotal after discounts, shipping excluded (current default)
+- `'subtotal_shipping'` — 3% of product subtotal after discounts **plus** shipping cost
+
+Change that one word once the client confirms which base they want.
+
+Everything else is adjusted with small code filters (ask the developer):
 
 | Filter | Purpose | Default |
 |---|---|---|

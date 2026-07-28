@@ -23,7 +23,13 @@ Adds a "Shipping Protection (3%)" checkbox to the classic WooCommerce checkout:
 
 == Configuration ==
 
-No settings screen — defaults are intentionally simple. Filters:
+No settings screen — defaults are intentionally simple.
+
+Fee base: the PURATEK_SP_FEE_BASE constant at the top of the main plugin
+file switches between 'subtotal' (default) and 'subtotal_shipping'
+(subtotal + shipping cost) as the 3% base — a one-line change.
+
+Filters:
 
 * `puratek_sp_percentage`  — fee percentage (default 3).
 * `puratek_sp_label`       — customer-facing label.
