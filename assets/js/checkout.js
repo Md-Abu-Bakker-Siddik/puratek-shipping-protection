@@ -10,14 +10,28 @@
 
 	$(function () {
 		$(document.body).on('change', '#puratek-shipping-protection-checkbox', function () {
-			var optIn = $(this).is(':checked') ? 'yes' : 'no';
+			var $checkbox = $(this);
+			var optIn = $checkbox.is(':checked') ? 'yes' : 'no';
+			var previousState = optIn !== 'yes';
+
+			$checkbox.prop('disabled', true);
 
 			$.post(puratekSP.ajaxUrl, {
 				nonce: puratekSP.nonce,
 				opt_in: optIn
-			}).always(function () {
+			}).done(function (response) {
+				if (!response || !response.success) {
+					$checkbox.prop('checked', previousState);
+					return;
+				}
+
 				// Recalculate totals; WooCommerce blocks the UI while it runs.
 				$(document.body).trigger('update_checkout');
+			}).fail(function () {
+				// Keep the UI consistent with the unchanged server-side session.
+				$checkbox.prop('checked', previousState);
+			}).always(function () {
+				$checkbox.prop('disabled', false);
 			});
 		});
 	});

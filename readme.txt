@@ -2,7 +2,7 @@
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL-2.0-or-later
 
 In-house shipping protection fee for WooCommerce, replacing the Route plugin.
@@ -38,6 +38,11 @@ Filters:
 * `puratek_sp_fee_taxable` — whether the fee is taxable (default: no).
 
 == Changelog ==
+
+= 1.0.1 =
+* Finalized the fee base as discounted merchandise subtotal, excluding shipping and tax.
+* Hardened percentage filtering and checkout-session error handling.
+* Restores the checkbox if the AJAX update fails.
 
 = 1.0.0 =
 * Initial release: checkout checkbox, 3% fee, AJAX toggle, order meta,

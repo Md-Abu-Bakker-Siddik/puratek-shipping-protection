@@ -3,7 +3,7 @@
  * Plugin Name:       Puratek Shipping Protection
  * Plugin URI:        https://puratekpeptides.com
  * Description:       In-house shipping protection fee, added automatically at checkout with a customer opt-out checkbox. Replaces the Route plugin.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Puratek
  * Requires at least: 6.0
  * Requires PHP:      7.4
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'PURATEK_SP_VERSION', '1.0.0' );
+define( 'PURATEK_SP_VERSION', '1.0.1' );
 define( 'PURATEK_SP_URL', plugin_dir_url( __FILE__ ) );
 
 /**
@@ -25,9 +25,12 @@ define( 'PURATEK_SP_URL', plugin_dir_url( __FILE__ ) );
 define( 'PURATEK_SP_DEFAULT_PERCENT', 3 );
 
 /**
- * Fee base — THE one-line switch (pending client answer, Q1):
+ * Fee base:
  *   'subtotal'          => 3% of product subtotal after discounts (shipping excluded)
  *   'subtotal_shipping' => 3% of (product subtotal after discounts + shipping cost)
+ *
+ * Puratek's configured policy is 'subtotal': discounted merchandise only,
+ * excluding shipping and tax.
  */
 define( 'PURATEK_SP_FEE_BASE', 'subtotal' );
 
@@ -99,7 +102,8 @@ class Puratek_Shipping_Protection {
 	 * ------------------------------------------------------------------- */
 
 	public function get_percentage() {
-		return (float) apply_filters( 'puratek_sp_percentage', PURATEK_SP_DEFAULT_PERCENT );
+		$percentage = (float) apply_filters( 'puratek_sp_percentage', PURATEK_SP_DEFAULT_PERCENT );
+		return max( 0, min( 100, $percentage ) );
 	}
 
 	public function get_label() {
@@ -170,7 +174,7 @@ class Puratek_Shipping_Protection {
 
 		/*
 		 * Fee base: controlled by the PURATEK_SP_FEE_BASE constant at the top of
-		 * this file (one-line switch, pending client confirmation of Q1).
+		 * this file.
 		 * The 'puratek_sp_fee_base' filter can still override the final base.
 		 */
 		$base = (float) $cart->get_cart_contents_total();
@@ -195,14 +199,16 @@ class Puratek_Shipping_Protection {
 	public function ajax_toggle() {
 		check_ajax_referer( self::NONCE_ACTION, 'nonce' );
 
-		$opt_in = ( isset( $_POST['opt_in'] ) && 'yes' === $_POST['opt_in'] ) ? 'yes' : 'no';
+		$opt_in = ( isset( $_POST['opt_in'] ) && 'yes' === wc_clean( wp_unslash( $_POST['opt_in'] ) ) ) ? 'yes' : 'no';
 
-		if ( function_exists( 'WC' ) && WC()->session ) {
-			if ( ! WC()->session->has_session() ) {
-				WC()->session->set_customer_session_cookie( true );
-			}
-			WC()->session->set( self::SESSION_KEY, $opt_in );
+		if ( ! function_exists( 'WC' ) || ! WC()->session ) {
+			wp_send_json_error( array( 'message' => __( 'Your checkout session expired. Please refresh the page and try again.', 'puratek-shipping-protection' ) ), 409 );
 		}
+
+		if ( ! WC()->session->has_session() ) {
+			WC()->session->set_customer_session_cookie( true );
+		}
+		WC()->session->set( self::SESSION_KEY, $opt_in );
 
 		wp_send_json_success( array( 'opt_in' => $opt_in ) );
 	}

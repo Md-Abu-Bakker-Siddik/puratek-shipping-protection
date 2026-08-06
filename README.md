@@ -94,7 +94,8 @@ define( 'PURATEK_SP_FEE_BASE', 'subtotal' );
 - `'subtotal'` — 3% of product subtotal after discounts, shipping excluded (current default)
 - `'subtotal_shipping'` — 3% of product subtotal after discounts **plus** shipping cost
 
-Change that one word once the client confirms which base they want.
+Puratek's configured policy is the discounted product subtotal, excluding
+shipping and tax. The alternative remains available as a developer override.
 
 Everything else is adjusted with small code filters (ask the developer):
 
@@ -172,6 +173,11 @@ Yes, fully compatible.
 ---
 
 ## Changelog
+
+### 1.0.1 — August 2026
+- Finalized the fee base as discounted merchandise subtotal, excluding shipping and tax.
+- Hardened percentage filtering and checkout-session error handling.
+- Restores the checkbox when the AJAX update fails, preventing misleading totals.
 
 ### 1.0.0 — July 2026
 - Initial release: automatic 3% protection fee, opt-out checkbox with AJAX
