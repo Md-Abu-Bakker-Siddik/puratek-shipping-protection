@@ -43,6 +43,12 @@ stays with the store.
 Every **new** order starts with the box ticked again, even if the same
 customer removed protection on a previous order.
 
+The checkout also includes a Route-style branded widget. Clicking either the
+**Shipping Protection** title or the information icon opens an accessible
+modal with coverage details, issue-resolution guidance, 24/7 claim support,
+and links for claims, privacy, and terms. The modal closes from its close
+button, the backdrop, or the Escape key and traps keyboard focus while open.
+
 ---
 
 ## What the store team sees
@@ -105,6 +111,11 @@ Everything else is adjusted with small code filters (ask the developer):
 | `puratek_sp_label` | Customer-facing label | `Shipping Protection (3%)` |
 | `puratek_sp_fee_base` | Amount the % is calculated on | Cart subtotal after discounts, excl. shipping & tax |
 | `puratek_sp_fee_taxable` | Charge tax on the fee | No |
+| `puratek_sp_brand_name` | Widget/modal brand name | `Puratek` |
+| `puratek_sp_brand_logo_url` | Optional modal logo URL | Empty (text mark used) |
+| `puratek_sp_claim_url` | File A Claim link | Published claim page, then Contact Us fallback |
+| `puratek_sp_privacy_url` | Privacy Policy link | Published privacy page, then WordPress privacy setting |
+| `puratek_sp_terms_url` | Terms of Service link | WooCommerce terms page |
 
 **Example — change the fee to 2.5%:**
 
@@ -173,6 +184,12 @@ Yes, fully compatible.
 ---
 
 ## Changelog
+
+### 1.1.0 - August 2026
+- Added a Route-style branded checkout widget with a live fee amount.
+- Added an accessible information modal and responsive isolated CSS.
+- Added smooth modal entrance/exit and staggered benefit animations with a reduced-motion fallback.
+- Added native-fetch opt-in toggling with WooCommerce totals refresh.
 
 ### 1.0.1 — August 2026
 - Finalized the fee base as discounted merchandise subtotal, excluding shipping and tax.

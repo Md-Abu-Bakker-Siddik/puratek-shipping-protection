@@ -2,7 +2,7 @@
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 
 In-house shipping protection fee for WooCommerce, replacing the Route plugin.
@@ -20,6 +20,9 @@ Adds a "Shipping Protection (3%)" checkbox to the classic WooCommerce checkout:
   `_puratek_shipping_protection_fee`).
 * Works on single-site and multisite installs. HPOS compatible.
   Classic (shortcode) checkout only.
+* Includes a Route-style branded widget with a live fee amount.
+* Includes an accessible coverage modal with keyboard focus management,
+  backdrop and Escape close controls, and claims/privacy/terms links.
 
 == Configuration ==
 
@@ -38,6 +41,13 @@ Filters:
 * `puratek_sp_fee_taxable` — whether the fee is taxable (default: no).
 
 == Changelog ==
+
+= 1.1.0 =
+* Added a Route-style branded checkout widget with a live fee amount.
+* Added the accessible Shipping Protection information modal.
+* Added smooth modal animations with a reduced-motion accessibility fallback.
+* Added native-fetch opt-in toggling with WooCommerce total recalculation.
+* Added namespace-isolated responsive checkout CSS.
 
 = 1.0.1 =
 * Finalized the fee base as discounted merchandise subtotal, excluding shipping and tax.
