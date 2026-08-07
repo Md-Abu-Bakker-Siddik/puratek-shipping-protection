@@ -75,7 +75,7 @@ choose whether to include it, just like shipping.
 ## Installation & go-live
 
 1. Upload the plugin: **Plugins → Add New → Upload Plugin** → select the zip
-   → **Activate**. (No settings screen — it works immediately.)
+   → **Activate**, then review **WooCommerce → Shipping Protection**.
 2. Place a small test order and confirm the fee appears at checkout, on the
    order, and in the confirmation email.
 3. **Only after the test order is verified:** deactivate the **Route** plugin.
@@ -88,7 +88,16 @@ choose whether to include it, just like shipping.
 
 ## Configuration
 
-There is intentionally no settings page — fewer things to break.
+Open **WooCommerce → Shipping Protection** to configure:
+
+- Protection percentage and default checkout state
+- Accent color and brand name
+- Compact, Shield Card, or Toggle Banner checkout design
+- Checkout and popup copy
+- Claim, privacy, and terms page URLs
+
+Saved settings are sanitized. Popup links are displayed only when their URL
+fields have been completed.
 
 **Fee base (the one-line switch):** at the top of
 `puratek-shipping-protection.php`:
@@ -103,7 +112,7 @@ define( 'PURATEK_SP_FEE_BASE', 'subtotal' );
 Puratek's configured policy is the discounted product subtotal, excluding
 shipping and tax. The alternative remains available as a developer override.
 
-Everything else is adjusted with small code filters (ask the developer):
+Developer filters remain available for advanced overrides:
 
 | Filter | Purpose | Default |
 |---|---|---|
@@ -113,9 +122,9 @@ Everything else is adjusted with small code filters (ask the developer):
 | `puratek_sp_fee_taxable` | Charge tax on the fee | No |
 | `puratek_sp_brand_name` | Widget/modal brand name | `Puratek` |
 | `puratek_sp_brand_logo_url` | Optional modal logo URL | Empty (text mark used) |
-| `puratek_sp_claim_url` | File A Claim link | Published claim page, then Contact Us fallback |
-| `puratek_sp_privacy_url` | Privacy Policy link | Published privacy page, then WordPress privacy setting |
-| `puratek_sp_terms_url` | Terms of Service link | WooCommerce terms page |
+| `puratek_sp_claim_url` | File A Claim link | Hidden until configured |
+| `puratek_sp_privacy_url` | Privacy Policy link | Hidden until configured |
+| `puratek_sp_terms_url` | Terms & Coverage link | Hidden until configured |
 
 **Example — change the fee to 2.5%:**
 
@@ -163,7 +172,7 @@ Yes, fully compatible.
 
 | Symptom | Likely cause / fix |
 |---|---|
-| Checkbox missing at checkout | Theme overrides the order review template without the `woocommerce_review_order_before_order_total` hook — check the child theme's WooCommerce templates |
+| Checkbox missing at checkout | Theme overrides the order review template without the `woocommerce_review_order_after_order_total` hook — check the child theme's WooCommerce templates |
 | Fee doesn't update when toggling | JavaScript error from another plugin blocking the AJAX call — check the browser console |
 | Two protection fees shown | Route is still active — deactivate it |
 | Fee shows $0.00 | Cart subtotal is 0 (e.g. 100% coupon) — the fee hides itself automatically at 0 |
@@ -184,6 +193,23 @@ Yes, fully compatible.
 ---
 
 ## Changelog
+
+### 1.2.2 - August 2026
+- Replaced the browser checkbox with a consistent branded control and white checkmark.
+- Improved borders, spacing, focus states, selected states, and card depth across all templates.
+
+### 1.2.1 - August 2026
+- Compacted the popup and removed the oversized standalone icon.
+- Updated the popup summary to match coverage exclusions and the 10-day claim window.
+- Hide claim, privacy, and terms links unless their URLs are explicitly configured.
+
+### 1.2.0 - August 2026
+- Added a WooCommerce admin settings screen.
+- Added Shield Card and Toggle Banner checkout templates alongside Compact.
+- Added configurable percentage, default state, color, copy, and policy URLs.
+- Refreshed the information popup with a stronger visual hierarchy.
+- Made the submitted checkout field authoritative and added a no-JavaScript fallback.
+- Mark orders protected only when the protection fee is actually present.
 
 ### 1.1.0 - August 2026
 - Added a Route-style branded checkout widget with a live fee amount.
