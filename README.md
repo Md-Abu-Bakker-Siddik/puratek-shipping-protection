@@ -13,7 +13,7 @@ stays with the store.
 
 | | |
 |---|---|
-| **Adds** | A "Shipping Protection (3%)" checkbox on the checkout page, **checked by default** |
+| **Adds** | A "Shipping Protection" checkbox on the checkout page, **checked by default** |
 | **Charges** | 3% of the cart subtotal (after discounts) as a normal WooCommerce fee |
 | **Customer control** | Untick the box → fee is removed instantly, no page reload |
 | **Records** | The choice (Yes/No) and fee amount are saved on every order |
@@ -27,10 +27,10 @@ stays with the store.
 2. In the order summary, just above the total, they see:
 
    ```
-   ☑  Shipping Protection (3%)
+   ☑  Shipping Protection
       Protects your order against loss, theft, or damage in transit.
 
-   Shipping Protection (3%)                          $4.79
+   Shipping Protection                               $4.79
    ─────────────────────────────────────────────────────────
    Total                                           $164.44
    ```
@@ -55,7 +55,7 @@ button, the backdrop, or the Escape key and traps keyboard focus while open.
 
 **WooCommerce → Orders → (any order):**
 
-- The fee appears as a line item: `Shipping Protection (3%)  $4.79`
+- The fee appears as a line item: `Shipping Protection  $4.79`
 - In the order details box there is a clear indicator:
   - 🟢 **Shipping Protection: Yes** — this order is protected
   - 🟠 **Shipping Protection: No (customer removed)** — customer opted out
@@ -117,7 +117,7 @@ Developer filters remain available for advanced overrides:
 | Filter | Purpose | Default |
 |---|---|---|
 | `puratek_sp_percentage` | Fee percentage | `3` |
-| `puratek_sp_label` | Customer-facing label | `Shipping Protection (3%)` |
+| `puratek_sp_label` | Customer-facing label | `Shipping Protection` |
 | `puratek_sp_fee_base` | Amount the % is calculated on | Cart subtotal after discounts, excl. shipping & tax |
 | `puratek_sp_fee_taxable` | Charge tax on the fee | No |
 | `puratek_sp_brand_name` | Widget/modal brand name | `Puratek` |
@@ -193,6 +193,9 @@ Yes, fully compatible.
 ---
 
 ## Changelog
+
+### 1.2.3 - August 2026
+- Removed the percentage from the customer-facing WooCommerce fee label while preserving the configured fee calculation.
 
 ### 1.2.2 - August 2026
 - Replaced the browser checkbox with a consistent branded control and white checkmark.

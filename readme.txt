@@ -2,14 +2,14 @@
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPL-2.0-or-later
 
 In-house shipping protection fee for WooCommerce, replacing the Route plugin.
 
 == Description ==
 
-Adds a "Shipping Protection (3%)" checkbox to the classic WooCommerce checkout:
+Adds a "Shipping Protection" checkbox to the classic WooCommerce checkout:
 
 * Checked by default — the fee is added automatically.
 * The customer can untick it; totals refresh via AJAX without a page reload.
@@ -42,6 +42,9 @@ Filters:
 * `puratek_sp_fee_taxable` — whether the fee is taxable (default: no).
 
 == Changelog ==
+
+= 1.2.3 =
+* Removed the percentage from the customer-facing WooCommerce fee label while preserving the configured fee calculation.
 
 = 1.2.2 =
 * Replaced native checkbox rendering with a branded control and white checkmark.

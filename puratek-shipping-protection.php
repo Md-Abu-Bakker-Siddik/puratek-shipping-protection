@@ -3,7 +3,7 @@
  * Plugin Name:       Puratek Shipping Protection
  * Plugin URI:        https://puratekpeptides.com
  * Description:       In-house shipping protection fee, added automatically at checkout with a customer opt-out checkbox. Replaces the Route plugin.
- * Version:           1.2.2
+ * Version:           1.2.3
  * Author:            Puratek
  * Requires at least: 6.0
  * Requires PHP:      7.4
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'PURATEK_SP_VERSION', '1.2.2' );
+define( 'PURATEK_SP_VERSION', '1.2.3' );
 define( 'PURATEK_SP_URL', plugin_dir_url( __FILE__ ) );
 
 /**
@@ -138,11 +138,7 @@ class Puratek_Shipping_Protection {
 	}
 
 	public function get_label() {
-		$label = sprintf(
-			/* translators: %s: fee percentage */
-			__( 'Shipping Protection (%s%%)', 'puratek-shipping-protection' ),
-			wc_format_localized_decimal( $this->get_percentage() )
-		);
+		$label = __( 'Shipping Protection', 'puratek-shipping-protection' );
 		return apply_filters( 'puratek_sp_label', $label );
 	}
 
